@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/my_conteiner.dart';
-import 'package:flutter_app/my_flexible.dart';
-import 'package:flutter_app/row_cilumn.dart';
-import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
+import 'package:flutter/rendering.dart';
+
+import 'layout_state.dart';
+import 'my_flexible.dart';
 
 
- main() {
-   debugPaintSizeEnabled = false;
+main() {
+  debugPaintSizeEnabled = false;
   return runApp(MyApp());
 }
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Quiz App',
       theme: ThemeData(primarySwatch: Colors.amber),
-      home: MyFlex(),
+      home: MyAppState(),
     );
   }
 }
@@ -34,3 +34,8 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
