@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/Questions.dart';
+import 'package:flutter_app/widgets/answer.dart';
+import 'package:flutter_app/widgets/progress_bar.dart';
+import 'package:flutter_app/widgets/quiz.dart';
+import 'package:flutter_app/widgets/result.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,15 +11,59 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final QuestionData data = QuestionData();
+  int _countResult = 0;
+  int _questionIndex = 0;
+
+  List<Icon> _icons = [];
+
+  void _clearState() => setState(() {
+        _questionIndex = 0;
+        _countResult = 0;
+        _icons = [];
+      });
+
+  void _onChangeAnswer(bool isCorrect) => setState(() {
+        if (isCorrect) {
+          _icons.add(Icon(Icons.brightness_1, color: Color(0xFFbd27ff)));
+          _countResult += 1;
+        } else {
+          _icons.add(Icon(Icons.brightness_1, color: Color(0xFF000000)));
+        }
+        _questionIndex += 1;
+      });
+
   @override
   Widget build(BuildContext context) {
+    var answers;
     return Scaffold(
-      appBar: AppBar(title: Text('Testing')),
-      body: Container(
-        child: Center(
-          child: Text('here it'),
-        ),
-      ),
-    );
+        appBar: AppBar(title: Text('Testing')),
+        body: Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+                color: const Color(0xff2a375a),
+                image: DecorationImage(
+                    image: AssetImage('assets/images/bg.jpeg'),
+                    fit: BoxFit.cover)),
+            child: Column(
+              children: <Widget>[
+                ProgressBar(
+                  icons: _icons,
+                  count: _questionIndex,
+                  total: data.questions.length,
+                ),
+                _questionIndex < data.questions.length
+                ? Quiz(
+                  index: _questionIndex,
+                  questionData: data,
+                  onChangeAnswer: _onChangeAnswer,
+                )
+                    : Result(
+                  count: _countResult,
+                  total: data.questions.length,
+                  onClearState: _clearState,
+                )
+              ],
+            )));
   }
 }

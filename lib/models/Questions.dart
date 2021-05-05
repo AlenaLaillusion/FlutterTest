@@ -1,6 +1,4 @@
 
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 class Question {
@@ -11,6 +9,7 @@ class Question {
     @required this.title,
     @required this.answer,
   });
+
 }
 
 class QuestionData {
